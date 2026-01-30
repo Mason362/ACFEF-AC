@@ -15,7 +15,11 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          curl -sS -f \
-            -H "apikey: $SUPABASE_ANON_KEY" \
-            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
-            "$SUPABASE_URL/rest/v1/keep_alive?select=id&limit=1"
+         curl -sS -f \
+          -X PATCH \
+          -H "apikey: $SUPABASE_ANON_KEY" \
+          -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+          -H "Content-Type: application/json" \
+          -H "Prefer: return=representation" \
+          "$SUPABASE_URL/rest/v1/keep_alive?id=eq.1" \
+          -d '{"touched_at":"now()"}'
