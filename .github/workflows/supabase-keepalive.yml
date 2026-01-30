@@ -15,7 +15,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-         curl -sS -f \
+         curl --retry 3 --retry-delay 10 --retry-all-errors -sS -f \
           -X PATCH \
           -H "apikey: $SUPABASE_ANON_KEY" \
           -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
